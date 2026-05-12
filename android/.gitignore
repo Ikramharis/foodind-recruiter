@@ -1,0 +1,56 @@
+PS C:\xampp\htdocs\foodindrecruiter> C:\xampp\htdocs\foodindrecruiter\    ← here
+>> │
+>> ├── .gitignore                        ← create here
+>> ├── pubspec.yaml
+>> ├── lib\
+>> ├── android\
+>> ├── ios\
+>> └── ...
+ere\x0a│\x0a├── .gitignore                        reate here\x0a├── pubspec.yaml\x0a├── lib\x5c\x0a├── android\x5c\x0a├── ios\x5c\x0a└── ...;7f509fed-238a-4928-96b7-44402b5e02eeC:\xampp\htdocs\foodindrecruiter\: The term 'C:\xampp\htdocs\foodindrecruiter\' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+│: 
+Line |
+   2 |  │
+     |  ~
+     | The term '│' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+├──: 
+Line |
+   3 |  ├── .gitignore                        ← create here
+     |  ~~~
+     | The term '├──' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+├──: 
+Line |
+   4 |  ├── pubspec.yaml
+     |  ~~~
+     | The term '├──' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+├──: 
+Line |
+   5 |  ├── lib\
+     |  ~~~
+     | The term '├──' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+├──: 
+Line |
+   6 |  ├── android\
+     |  ~~~
+     | The term '├──' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+├──: 
+Line |
+   7 |  ├── ios\
+     |  ~~~
+     | The term '├──' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+└──: 
+Line |
+   8 |  └── ...
+     |  ~~~
+     | The term '└──' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\xampp\htdocs\foodindrecruiter>  C:\xampp\htdocs\foodindrecruiter\
+C:\xampp\htdocs\foodindrecruiter\: The term 'C:\xampp\htdocs\foodindrecruiter\' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\xampp\htdocs\foodindrecruiter>
