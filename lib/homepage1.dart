@@ -50,6 +50,79 @@ class HomePageUser extends StatelessWidget {
     initNotifications();
     final args = ModalRoute.of(context)!.settings.arguments as Map?;
     final username = args?['username'];
+    final width = MediaQuery.of(context).size.width;
+    final isTablet = width >= 600;
+    final horizontalPadding = isTablet ? 32.0 : 20.0;
+
+    final cards = [
+      _DashboardCardData(
+        icon: Icons.assignment_turned_in_outlined,
+        label: 'Start Test',
+        subtitle: 'Take your assessment',
+        color: const Color(0xFF2E86AB),
+        onTap: () => Navigator.pushNamed(
+          context,
+          '/criteria',
+          arguments: {
+            'criteriaId': 1,
+            'answers': <String, String>{'username': username ?? ''},
+          },
+        ),
+      ),
+      _DashboardCardData(
+        icon: Icons.manage_accounts_outlined,
+        label: 'Edit Profile',
+        subtitle: 'Update your details',
+        color: const Color(0xFF7B2D8B),
+        onTap: () => Navigator.pushNamed(
+          context,
+          '/edit-profile',
+          arguments: {'username': username},
+        ),
+      ),
+      _DashboardCardData(
+        icon: Icons.bar_chart_rounded,
+        label: 'View Progress',
+        subtitle: 'Check your status',
+        color: const Color(0xFF00897B),
+        onTap: () async {
+          final response = await https.get(
+            Uri.parse(
+              'https://snow-duck-522249.hostingersite.com/get_candidate_status.php?username=$username',
+            ),
+          );
+          String status = 'Unknown';
+          String remarks = '';
+          if (response.statusCode == 200) {
+            final data = json.decode(response.body);
+            if (data['success']) {
+              status = data['status'];
+              remarks = data['remarks'] ?? '';
+            } else {
+              status = data['message'] ?? 'Unknown';
+            }
+          }
+          await showStatusNotification(status, remarks);
+          Navigator.pushNamed(
+            context,
+            '/view-progress',
+            arguments: {'username': username},
+          );
+        },
+      ),
+      _DashboardCardData(
+        icon: Icons.lightbulb_outline_rounded,
+        label: 'Tips',
+        subtitle: 'Interview & career tips',
+        color: const Color(0xFFE65100),
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const TipsPage(isAdmin: false),
+          ),
+        ),
+      ),
+    ];
 
     return Scaffold(
       backgroundColor: kBackground,
@@ -58,98 +131,56 @@ class HomePageUser extends StatelessWidget {
           _buildHeader(context, username),
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'What would you like to do?',
                     style: TextStyle(
-                      fontSize: 17,
+                      fontSize: isTablet ? 20 : 17,
                       fontWeight: FontWeight.w600,
                       color: kTextMain,
                     ),
                   ),
                   const SizedBox(height: 16),
-                  GridView.count(
-                    crossAxisCount: 2,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    crossAxisSpacing: 14,
-                    mainAxisSpacing: 14,
-                    childAspectRatio: 0.95,
-                    children: [
-                      _DashboardCard(
-                        icon: Icons.assignment_turned_in_outlined,
-                        label: 'Start Test',
-                        subtitle: 'Take your assessment',
-                        color: const Color(0xFF2E86AB),
-                        onTap: () => Navigator.pushNamed(
-                          context,
-                          '/criteria',
-                          arguments: {
-                            'criteriaId': 1,
-                            'answers': <String, String>{
-                              'username': username ?? ''
-                            },
-                          },
-                        ),
-                      ),
-                      _DashboardCard(
-                        icon: Icons.manage_accounts_outlined,
-                        label: 'Edit Profile',
-                        subtitle: 'Update your details',
-                        color: const Color(0xFF7B2D8B),
-                        onTap: () => Navigator.pushNamed(
-                          context,
-                          '/edit-profile',
-                          arguments: {'username': username},
-                        ),
-                      ),
-                      _DashboardCard(
-                        icon: Icons.bar_chart_rounded,
-                        label: 'View Progress',
-                        subtitle: 'Check your status',
-                        color: const Color(0xFF00897B),
-                        onTap: () async {
-                          final response = await https.get(
-                            Uri.parse(
-                              'https://snow-duck-522249.hostingersite.com/get_candidate_status.php?username=$username',
-                            ),
-                          );
-                          String status = 'Unknown';
-                          String remarks = '';
-                          if (response.statusCode == 200) {
-                            final data = json.decode(response.body);
-                            if (data['success']) {
-                              status = data['status'];
-                              remarks = data['remarks'] ?? '';
-                            } else {
-                              status = data['message'] ?? 'Unknown';
-                            }
-                          }
-                          await showStatusNotification(status, remarks);
-                          Navigator.pushNamed(
-                            context,
-                            '/view-progress',
-                            arguments: {'username': username},
-                          );
-                        },
-                      ),
-                      _DashboardCard(
-                        icon: Icons.lightbulb_outline_rounded,
-                        label: 'Tips',
-                        subtitle: 'Interview & career tips',
-                        color: const Color(0xFFE65100),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const TipsPage(isAdmin: false),
+                  isTablet
+                      ? SizedBox(
+                          height: 160,
+                          child: Row(
+                            children: cards
+                                .map((c) => Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 6),
+                                        child: _DashboardCard(
+                                          icon: c.icon,
+                                          label: c.label,
+                                          subtitle: c.subtitle,
+                                          color: c.color,
+                                          onTap: c.onTap,
+                                        ),
+                                      ),
+                                    ))
+                                .toList(),
                           ),
+                        )
+                      : GridView.count(
+                          crossAxisCount: 2,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          crossAxisSpacing: 14,
+                          mainAxisSpacing: 14,
+                          childAspectRatio: 0.95,
+                          children: cards
+                              .map((c) => _DashboardCard(
+                                    icon: c.icon,
+                                    label: c.label,
+                                    subtitle: c.subtitle,
+                                    color: c.color,
+                                    onTap: c.onTap,
+                                  ))
+                              .toList(),
                         ),
-                      ),
-                    ],
-                  ),
                   const SizedBox(height: 20),
                   _buildInfoBanner(),
                 ],
@@ -304,6 +335,22 @@ class HomePageUser extends StatelessWidget {
       ),
     );
   }
+}
+
+class _DashboardCardData {
+  final IconData icon;
+  final String label;
+  final String subtitle;
+  final Color color;
+  final VoidCallback onTap;
+
+  _DashboardCardData({
+    required this.icon,
+    required this.label,
+    required this.subtitle,
+    required this.color,
+    required this.onTap,
+  });
 }
 
 class _DashboardCard extends StatelessWidget {
