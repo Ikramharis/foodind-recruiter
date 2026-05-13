@@ -142,6 +142,9 @@ class _ViewProgressPageState extends State<ViewProgressPage> {
     final args = ModalRoute.of(context)?.settings.arguments as Map?;
     final username = args?['username'];
 
+    final width = MediaQuery.of(context).size.width;
+    final isTablet = width >= 600;
+
     return Scaffold(
       backgroundColor: kBackground,
       body: Column(
@@ -153,7 +156,14 @@ class _ViewProgressPageState extends State<ViewProgressPage> {
                     child: CircularProgressIndicator(color: kPrimary))
                 : error.isNotEmpty
                     ? _buildError()
-                    : _buildContent(),
+                    : isTablet
+                        ? Center(
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 640),
+                              child: _buildContent(),
+                            ),
+                          )
+                        : _buildContent(),
           ),
         ],
       ),

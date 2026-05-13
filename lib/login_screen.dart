@@ -66,15 +66,29 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final isTablet = width >= 600;
     return Scaffold(
       backgroundColor: kBackground,
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            _buildHeader(),
-            _buildFormCard(),
-          ],
-        ),
+        child: isTablet
+            ? Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 640),
+                  child: Column(
+                    children: [
+                      _buildHeader(),
+                      _buildFormCard(),
+                    ],
+                  ),
+                ),
+              )
+            : Column(
+                children: [
+                  _buildHeader(),
+                  _buildFormCard(),
+                ],
+              ),
       ),
     );
   }

@@ -127,13 +127,18 @@ class _AdminProgressPageState extends State<AdminProgressPage> {
                     child: CircularProgressIndicator(color: kAdminPrimary))
                 : filteredCandidates.isEmpty
                     ? _buildEmpty()
-                    : ListView.builder(
-                        padding:
-                            const EdgeInsets.fromLTRB(16, 8, 16, 16),
-                        itemCount: filteredCandidates.length,
-                        itemBuilder: (context, index) {
-                          final c = filteredCandidates[index];
-                          return _buildCandidateCard(c, index);
+                    : LayoutBuilder(
+                        builder: (context, constraints) {
+                          final isTablet = constraints.maxWidth >= 600;
+                          final horizontalPadding = isTablet ? constraints.maxWidth * 0.08 : 16.0;
+                          return ListView.builder(
+                            padding: EdgeInsets.fromLTRB(horizontalPadding, 8, horizontalPadding, 16),
+                            itemCount: filteredCandidates.length,
+                            itemBuilder: (context, index) {
+                              final c = filteredCandidates[index];
+                              return _buildCandidateCard(c, index);
+                            },
+                          );
                         },
                       ),
           ),

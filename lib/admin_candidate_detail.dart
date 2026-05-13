@@ -173,21 +173,27 @@ class _AdminCandidateDetailPageState
               children: [
                 _buildHeader(context),
                 Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-                    child: Column(
-                      children: [
-                        _buildInfoCard(),
-                        const SizedBox(height: 16),
-                        if (criteriaScores != null) _buildScoresCard(),
-                        const SizedBox(height: 16),
-                        _buildRemarksCard(),
-                        const SizedBox(height: 16),
-                        if (candidateData?['resume'] != null &&
-                            candidateData!['resume'].toString().isNotEmpty)
-                          _buildResumeCard(),
-                      ],
-                    ),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final isTablet = constraints.maxWidth >= 600;
+                      final hPad = isTablet ? constraints.maxWidth * 0.1 : 16.0;
+                      return SingleChildScrollView(
+                        padding: EdgeInsets.fromLTRB(hPad, 16, hPad, 24),
+                        child: Column(
+                          children: [
+                            _buildInfoCard(),
+                            const SizedBox(height: 16),
+                            if (criteriaScores != null) _buildScoresCard(),
+                            const SizedBox(height: 16),
+                            _buildRemarksCard(),
+                            const SizedBox(height: 16),
+                            if (candidateData?['resume'] != null &&
+                                candidateData!['resume'].toString().isNotEmpty)
+                              _buildResumeCard(),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],

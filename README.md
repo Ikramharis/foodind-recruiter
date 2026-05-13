@@ -1,4 +1,4 @@
-# FoodInd Recruiter 🍽️
+# FoodInd Recruiter 
 
 A digital recruitment platform designed specifically for the **food industry**, built with Flutter and PHP.
 

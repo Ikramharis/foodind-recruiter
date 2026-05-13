@@ -17,6 +17,13 @@ class Admin_Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final isTablet = width >= 600;
+    final isLargeTablet = width >= 840;
+    final crossAxisCount = isLargeTablet ? 4 : isTablet ? 3 : 2;
+    final childAspectRatio = isTablet ? 1.1 : 0.95;
+    final horizontalPadding = isLargeTablet ? width * 0.08 : isTablet ? 32.0 : 20.0;
+
     return Scaffold(
       backgroundColor: kAdminBackground,
       body: Column(
@@ -24,26 +31,26 @@ class Admin_Homepage extends StatelessWidget {
           _buildHeader(context),
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Management Panel',
                     style: TextStyle(
-                      fontSize: 17,
+                      fontSize: isTablet ? 20 : 17,
                       fontWeight: FontWeight.w600,
                       color: kAdminText,
                     ),
                   ),
                   const SizedBox(height: 16),
                   GridView.count(
-                    crossAxisCount: 2,
+                    crossAxisCount: crossAxisCount,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     crossAxisSpacing: 14,
                     mainAxisSpacing: 14,
-                    childAspectRatio: 0.95,
+                    childAspectRatio: childAspectRatio,
                     children: [
                       _AdminCard(
                         icon: Icons.people_alt_rounded,
