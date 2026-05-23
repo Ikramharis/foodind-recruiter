@@ -8,18 +8,18 @@ Available on Google Play Store (Internal Testing)
 ## ✨ Features
 
 ### For Candidates
-- Register and create profile with resume upload
-- Take a psychometric assessment (9 criteria, 18 questions)
+- Register and create a profile with a resume upload
+- Take a digital assessment (9 criteria, 18 questions)
 - Track application status in real-time
-- Get notified when status is updated by recruiter
+- Get notified when the status is updated by the recruiter
 - View interview and career tips
 
 ### For Recruiters (Admin)
 - View and manage all registered candidates
 - Review candidate profiles and resumes
 - Update candidate application status with remarks
-- View assessment scores and rank candidates
-- Make informed hiring decisions based on psychometric results
+- View assessment scores 
+- Make informed hiring decisions based on assessment results
 
 ## 🛠️ Tech Stack
 
